@@ -35,23 +35,7 @@ class transaction;
   
 endclass
  
- 
-/*
-module tb;
-  transaction tr;
-  
-  
-  initial begin
-    tr = new();
-    tr.display("TOP");
-    
-  end
-  
-  
-endmodule
- 
-*/
- 
+
  
 class generator;
   
@@ -89,7 +73,7 @@ class generator;
   
 endclass
  
-/////////////////////////////////////////////////////////
+////////////////
  
 class driver;
   
@@ -197,68 +181,7 @@ class driver;
   
 endclass
  
-/*
- 
-module tb;
-  generator gen;
-  driver drv;
-  event next;
-  event done;
-  mailbox #(transaction) mbx;
-  mailbox #(bit [7:0]) mbxt;
-  
-  uart_if vif();
-  
-  uart_top #(1000000, 9600) dut (vif.clk,vif.rst,vif.rx,vif.dintx,vif.send,vif.tx,vif.doutrx,vif.donetx, vif.donerx);
-  
-  
-  
-    initial begin
-      vif.clk <= 0;
-    end
-    
-    always #10 vif.clk <= ~vif.clk;
-  
-  
- 
-  initial begin
-    mbx = new();
-    mbxt = new();
-    gen = new(mbx);
-    drv = new(mbxt,mbx);
-    gen.count  = 20;
-    drv.vif = vif;
-    
-    gen.drvnext = next;
-    
-    drv.drvnext = next;
-  end
-  
-  initial begin
-    
-    fork 
-      gen.run(); 
-      drv.run();
-    join_none
-    wait(gen.done.triggered);
-    $finish();
-  end
-  
-  initial begin
-  $dumpfile("dump.vcd");
-    $dumpvars;
-  end
-  
-  
-     
-assign vif.uclktx = dut.utx.uclk;
-assign vif.uclkrx = dut.rtx.uclk;
-    
-  
-  
-endmodule
- 
-*/
+
  
 class monitor;
  
@@ -320,86 +243,7 @@ endclass
  
 ////////////////////////////////////////////////////////
  
-/*
-module tb;
-  generator gen;
-  driver drv;
-  monitor mon;
-  
-  event sconext;
-  event drvnext;
-  
-  event done;
-  
-  mailbox #(transaction) mbx;
-  mailbox #(bit [7:0]) mbxds;
-  mailbox #(bit [7:0]) mbxms;
-  
-  uart_if vif();
-  
-  uart_top #(1000000, 9600) dut (vif.clk,vif.rst,vif.rx,vif.dintx,vif.send,vif.tx,vif.doutrx,vif.donetx, vif.donerx);
-  
-  
-  
-    initial begin
-      vif.clk <= 0;
-    end
-    
-    always #10 vif.clk <= ~vif.clk;
-  
-  
- 
-  initial begin
-    mbx = new();
-    mbxds = new();
-    mbxms = new();
-    
-    
-    gen = new(mbx);
-    drv = new(mbxds,mbx);
-    mon= new(mbxms);
-    
-    gen.count  = 10;
-    drv.vif = vif;
-    mon.vif = vif;
-    
-    gen.drvnext = drvnext;
-    
-    drv.drvnext = drvnext;
-    
-    gen.sconext = sconext;
-    
-    mon.sconext = sconext;
-  end
-  
-  initial begin
-    
-    fork 
-      gen.run(); 
-      drv.run();
-      mon.run();
-    join_none
-    wait(gen.done.triggered);
-    $finish();
-  end
-  
-  initial begin
-  $dumpfile("dump.vcd");
-    $dumpvars;
-  end
-  
-  
-     
-assign vif.uclktx = dut.utx.uclk;
-assign vif.uclkrx = dut.rtx.uclk;
-    
-  
-  
-endmodule
-*/
- 
-/////////////////////////////////////////////////////////////////////////
- 
+
  
  
 class scoreboard;
